@@ -1,0 +1,202 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;800;900&display=swap");
+
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: #1a1818;
+}
+
+.container {
+    max-width: 100%;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    background: #fff;
+    padding: 20px;
+    width: 520px;
+    height: 350px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 0 4px #ffffff;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    width: 100%;
+}
+
+.main img {
+    width: 120px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.user-choose,
+.pc-choose {
+    position: relative;
+}
+
+.user-emoji,
+.pc-emoji {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.emoji {
+    width: 45px !important;
+    position: absolute;
+}
+
+.pc-emoji {
+    right: -20px;
+    top: -15px;
+}
+
+.user-emoji {
+    left: -20px;
+    top: -15px;
+}
+
+
+.user-choose img {
+    transform: rotate(180deg) rotateX(180deg);
+}
+
+.user-choose-active {
+    animation: user-shake .7s ease infinite;
+}
+
+.pc-choose-active{
+    animation: pc-shake  .7s ease infinite;
+}
+
+.players {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    left: 0;
+    top: -70px;
+    color: #fff;
+}
+
+
+.center-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.center-box p {
+    font-size: 20px;
+    color: #1a1818;
+}
+
+
+.select-box {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 40px;
+}
+
+.select-box img {
+    transform: rotate(90deg);
+    height: 60px;
+    width: 60px;
+    object-fit: contain;
+    cursor: pointer;
+    opacity: .7;
+}
+
+.select-box img:nth-child(2) {
+    height: 70px;
+    width: 70px;
+}
+
+.select-box img:hover {
+    opacity: 1;
+}
+
+.select-box img:active {
+    transform: rotate(90deg) scale(.98);
+}
+
+.winner {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    z-index: 1000;
+    color: #fff;
+    background: #000;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.winner button {
+    padding: 8px 30px;
+    outline: none;
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.winner button:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+.winner button:active {
+    transform: scale(.98);
+    transition: 0s;
+}
+
+@keyframes user-shake {
+    50% {
+        transform: rotate(180deg) rotateX(180deg) rotate(-10deg);
+    }
+}
+
+@keyframes pc-shake {
+    50% {
+        transform: rotate(-10deg);
+    }
+}
+
+
+@media(min-width: 1400px) {
+    .container {
+        max-width: 1350px;
+    }
+}
