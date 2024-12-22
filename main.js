@@ -1,40 +1,98 @@
 const userScore = document.querySelector(".user-score")
 const pcScore = document.querySelector(".pc-score")
-const emoji = document.querySelectorAll(".emoji")
+const userEmoji = document.querySelector(".userEmoji")
+const pcEmoji = document.querySelector(".pcEmoji")
 
-const userChoice = document.querySelector(".user-select") // user img
-const pcChoice = document.querySelector(".pc-select") // pc img
+const userChoice = document.querySelector(".user-select")
+const pcChoice = document.querySelector(".pc-select")
 
-const scoreInfo = document.querySelector(".scoredName") 
+const scoreInfo = document.querySelector(".scoredName")
+const winnerBox = document.querySelector(".winner")
+const winnerIfo = document.querySelector(".whoWin")
+const restart = document.querySelector(".restart")
 
-const rock = document.querySelector(".rock") 
-const scissors = document.querySelector(".scissors") 
-const paper = document.querySelector(".paper") 
+const rock = document.querySelector(".rock")
+const scissors = document.querySelector(".scissors")
+const paper = document.querySelector(".paper")
 
 let userCount = 0
 let pcCount = 0
-
-
+const targetScore = 3
 let imgArray = ["./img/rock.png", "./img/scissors.png", "./img/paper.png"]
 
 let pcPlayer = () => Math.floor(Math.random() * 3)
 
-paper.addEventListener("click", () => {
+function scoreText(userSelection, pcSelection) {
+    if (userSelection === pcSelection) return "draw"
+    if (
+        (userSelection === "rock" && pcSelection === "scissors") ||
+        (userSelection === "scissors" && pcSelection === "paper") ||
+        (userSelection === "paper" && pcSelection === "rock")
+    ) {
+        return "you"
+    }
+    return "pc"
+}
+
+function scoreCounter(result) {
+    if (result === "you") {
+        userCount++
+        userScore.textContent = userCount
+        userEmoji.src = "./img/laugh.png"
+        pcEmoji.src = "./img/angry.png"
+        scoreInfo.textContent = "You win !"
+    } else if (result === "pc") {
+        pcCount++
+        pcScore.textContent = pcCount
+        userEmoji.src = "./img/angry.png"
+        pcEmoji.src = "./img/laugh.png"
+        scoreInfo.textContent = "PC win !"
+    } else {
+        userEmoji.src = "./img/default-emoji.png"
+        pcEmoji.src = "./img/default-emoji.png"
+        scoreInfo.textContent = "Draw !"
+    }
+
+    setTimeout(() => {
+        if (userCount === targetScore) {
+            gameEnd("You")
+        } else if (pcCount === targetScore) {
+            gameEnd("PC")
+        }
+    }, 1000)
+}
+
+function Main(userSelection) {
+    userChoice.src = "./img/rock.png"
+    pcChoice.src = "./img/rock.png"
+
     userChoice.classList.add("user-choose-active")
-    userChoice.src = paper.src
-    pcChoice.src = imgArray[pcPlayer()]
-})
+    pcChoice.classList.add("pc-choose-active")
 
-rock.addEventListener("click", () => {
-    userChoice.src = rock.src
-    pcChoice.src = imgArray[pcPlayer()]
-})
+    const pcSelectionIndex = pcPlayer()
+    const pcSelection = ["rock", "scissors", "paper"][pcSelectionIndex]
 
-scissors.addEventListener("click", () => {
-    userChoice.src = scissors.src
-    pcChoice.src = imgArray[pcPlayer()]
-})
+    setTimeout(() => {
+        userChoice.classList.remove("user-choose-active")
+        pcChoice.classList.remove("pc-choose-active")
 
-let time = setTimeout(() => {
-    userChoice.classList.remove('user-choose-active')
-}, 0)
+        userChoice.src = `./img/${userSelection}.png`
+        pcChoice.src = imgArray[pcSelectionIndex]
+
+        const result = scoreText(userSelection, pcSelection)
+        scoreCounter(result)
+    }, 2000)
+}
+
+function gameEnd(winner) {
+    scoreInfo.textContent = `${winner} win !`
+    winnerIfo.textContent = `${winner}`
+    winnerBox.style.display = "flex"
+}
+
+paper.addEventListener("click", () => Main("paper"))
+rock.addEventListener("click", () => Main("rock"))
+scissors.addEventListener("click", () => Main("scissors"))
+restart.addEventListener("click", () => {
+    location.reload()
+})
