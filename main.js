@@ -20,7 +20,7 @@ let pcCount = 0
 const targetScore = 3
 let imgArray = ["./img/rock.png", "./img/scissors.png", "./img/paper.png"]
 
-let pcPlayer = () => Math.floor(Math.random() * 3)
+let pcRandom = () => Math.floor(Math.random() * 3)
 
 function scoreText(userSelection, pcSelection) {
     if (userSelection === pcSelection) return "draw"
@@ -53,13 +53,11 @@ function scoreCounter(result) {
         scoreInfo.textContent = "Draw !"
     }
 
-    setTimeout(() => {
-        if (userCount === targetScore) {
-            gameEnd("You")
-        } else if (pcCount === targetScore) {
-            gameEnd("PC")
-        }
-    }, 1000)
+    if (userCount === targetScore) {
+        gameEnd("You")
+    } else if (pcCount === targetScore) {
+        gameEnd("PC")
+    }
 }
 
 function Main(userSelection) {
@@ -69,7 +67,7 @@ function Main(userSelection) {
     userChoice.classList.add("user-choose-active")
     pcChoice.classList.add("pc-choose-active")
 
-    const pcSelectionIndex = pcPlayer()
+    const pcSelectionIndex = pcRandom()
     const pcSelection = ["rock", "scissors", "paper"][pcSelectionIndex]
 
     setTimeout(() => {
@@ -85,7 +83,6 @@ function Main(userSelection) {
 }
 
 function gameEnd(winner) {
-    scoreInfo.textContent = `${winner} win !`
     winnerIfo.textContent = `${winner}`
     winnerBox.style.display = "flex"
 }
